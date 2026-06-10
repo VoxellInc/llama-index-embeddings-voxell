@@ -1,0 +1,17 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e . "pytest>=8,<9" "pytest-asyncio>=0.23.6,<0.24"
+      - run: pytest tests -v   # shape tests; live tests skip without FORGE_API_KEY
